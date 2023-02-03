@@ -1,0 +1,17 @@
+{
+    "name": "alibakhshiilani/web-proxy",
+    "description": "Web Proxy for browsing another website using your server traffic",
+    "license": "GPL-3.0+",
+    "autoload": {
+        "psr-4": {
+            "Alibakhshiilani\\WebProxy\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ali Bakhshi",
+            "email": "ali.bakhshi.office@gmail.com"
+        }
+    ],
+    "require": {}
+}
