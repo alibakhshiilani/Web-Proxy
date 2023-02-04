@@ -15,14 +15,14 @@ class Error
     public static function exceptionHandler($exception){
 
 
-        $filename = "../storage/logs/log-".date("Y-m-d").".txt";
+//        $filename = "../storage/logs/log-".date("Y-m-d").".log";
 
-        if(!file_exists($filename)){
-            $myfile=fopen($filename,'w');
-            fclose($myfile);
-        }
-
-        ini_set('error_log',$filename);
+//        if(!file_exists($filename)){
+//            $myfile=fopen($filename,'w') or die("Unable to open file!");
+//            fclose($myfile);
+//        }
+//
+//        ini_set('error_log',$filename);
 
         http_response_code(500);
 

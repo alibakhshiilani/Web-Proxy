@@ -1,5 +1,6 @@
 <?php
 session_start();
+define("ROOT_DIR",__DIR__);
 require 'vendor/autoload.php';
 /*
  * Require All File With Composer
@@ -18,8 +19,9 @@ $route = new \Alibakhshiilani\WebProxy\Core\Router();
  * Add Uri To Routing System
  */
 
-$route->add('/','BrowseController@page');
 $route->add('/browse','BrowseController@browse');
+$route->add('/','BrowseController@page');
+
 /*
  * Dispatch Current Address
  */

@@ -13,5 +13,7 @@
             "email": "ali.bakhshi.office@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-curl": "*"
+    }
 }
