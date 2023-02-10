@@ -91,6 +91,6 @@ class Proxy {
             $this->baseUrl = "http://".$urlInfo['host'];
         }
         $htmlParser = new HtmlParser();
-        return $htmlParser->parse($this->getHtmlContent());
+        return $htmlParser->parse($this->getHtmlContent(),$this->baseUrl);
     }
 }

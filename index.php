@@ -5,7 +5,7 @@ define("BASE_URL",sprintf(
     "%s://%s",
     isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
     $_SERVER['SERVER_NAME']
-));
+).":8080");
 require 'vendor/autoload.php';
 /*
  * Require All File With Composer

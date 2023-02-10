@@ -3,16 +3,30 @@ namespace Alibakhshiilani\WebProxy\Classes;
 
 class HtmlParser {
 
+    private $remoteBaseUrl = "";
+
+    private function proxyUrlsInsideAssets($content){
+
+        $matches = array();
+
+        preg_match_all('/url(?:\([\'"]?)([.\/..\/\/].*?)(?:[\'"]\))/', $content, $matches);
+
+
+//        var_dump($matches);
+//        die();
+
+        foreach ($matches[1] as $cssUrl){
+            $content = str_replace($cssUrl,BASE_URL."?wp_url=".$this->remoteBaseUrl.$cssUrl,$content);
+        }
+
+        return $content;
+    }
+
     private function proxyUrls($html){
 
-//        //proxy images , urls , files
-//        $html = preg_replace('/href=["\']([^/][^\':"]*)["\']/i', BASE_URL."assets?wp_url=", $html);
-//        $html = preg_replace('/src=["\']([^/][^\':"]*)["\']/i', BASE_URL."assets?wp_url=", $html);
-//        $html = preg_replace('/src=["\']([^/][^\':"]*)["\']/i', BASE_URL."assets?wp_download_url=", $html);
-
-        $prefixWithBaseUrl = 'http://localhost:8080?wp_url=https://www.darughe.com/';
+        $prefixWithBaseUrl = 'http://localhost:8080?wp_url='.$this->remoteBaseUrl;
         $prefix = 'http://localhost:8080?wp_url=';
-        $domain = "darughe.com";
+        $domain = $this->remoteBaseUrl;
 
         $targets = [
             "//img[not(starts-with(@src, '//'))]",
@@ -56,8 +70,9 @@ class HtmlParser {
         return $dom->saveHTML();
     }
 
-    public function parse($page){
+    public function parse($page,$baseUrl){
 //        echo "dd";
+        $this->remoteBaseUrl = $baseUrl;
         $content = $page["content"];
 
         if(
@@ -65,8 +80,12 @@ class HtmlParser {
             str_contains($page["info"]["content_type"],"text/html")
         ){
             $content = $this->proxyUrls($content);
-
             $content = $this->addInfoBar($content,$page["info"]);
+        }else if(
+            isset($page["info"]["content_type"]) &&
+            str_contains($page["info"]["content_type"],"text/css")
+        ){
+            $content = $this->proxyUrlsInsideAssets($content);
         }
 
         return $content;
